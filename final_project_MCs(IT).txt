@@ -1,0 +1,2826 @@
+// final_project_msc.cpp : Defines the entry point for the console application.
+//
+#include "stdafx.h"
+#include"iostream"
+#include"string"
+#include"fstream"
+#include"vector"
+#include"string"
+using namespace std;
+const string kerword_range_ids      = "101 to 159";
+const string symbols_range_ids      = "1001 to 1041";
+const int ID_asm      = 101;
+const int ID_auto     = 102;
+const int ID_bool     = 103;
+const int ID_break    = 104;
+const int ID_case     = 105;
+const int ID_catch    = 106;
+const int ID_char     = 107;
+const int ID_class    = 108;
+const int ID_const    = 109;
+const int ID_continue = 110;
+const int ID_default  = 111;
+const int ID_delete   = 112;
+const int ID_do       = 113;
+const int ID_double   = 114;
+const int ID_else     = 115;
+const int ID_enum     = 116;
+const int ID_explicit = 117; 
+const int ID_export   = 118;
+const int ID_extern   = 119;
+const int ID_float    = 120;
+const int ID_for      = 121;
+const int ID_friend   = 122;
+const int ID_goto     = 123;
+const int ID_if       = 124;
+const int ID_inline   = 125;
+const int ID_int      = 126;
+const int ID_long     = 127;
+const int ID_mutable  = 128;
+const int ID_namespace= 129;
+const int ID_new      = 130;
+const int ID_operator = 131;
+const int ID_private  = 132;
+const int ID_protected= 133;
+const int ID_public   = 134;
+const int ID_register = 135;
+const int ID_return   = 136;
+const int ID_short    = 137;
+const int ID_signed   = 138;
+const int ID_sizeof   = 139;
+const int ID_static   = 140;
+const int ID_struct   = 141;
+const int ID_switch   = 142;
+const int ID_template = 143;
+const int ID_this     = 144;
+const int ID_throw    = 145;
+const int ID_true     = 146;
+const int ID_try      = 147;
+const int ID_typedef  = 148;
+const int ID_typeid   = 149;
+const int ID_typename = 150;
+const int ID_union    = 151;
+const int ID_unsigned = 152;
+const int ID_using    = 153;
+const int ID_virtual  = 154;
+const int ID_void     = 155;
+const int ID_volatile = 156; 
+const int ID_while    = 157;
+const int ID_wchar_t  = 158;
+const int ID_false    = 159;
+const int ID_hash                            = 1001;//(#)     // 1
+const int ID_space                           = 1002;//( )     // 2
+const int ID_coma                            = 1003;//(,)     // 3
+const int ID_colon                           = 1004;//(:)     // 4
+const int ID_semicolon                       = 1005;//(;)     // 5
+const int ID_dot                             = 1006;//(.)     // 6
+const int ID_and_operator                    = 1007;//(&&)    // 7
+const int ID_or_operator                     = 1008;//(||)    // 8
+const int ID_equal_operator                  = 1009;//(==)    // 9
+const int ID_plus_operator                   = 1010;//(+)     // 10
+const int ID_grather_than                    = 1011;//(>)     // 11
+const int ID_less_than                       = 1012;//(<)     // 12
+const int ID_ampersand                       = 1013;//(&)     // 13
+const int ID_open_or_left_parenthesis        = 1014;//( ( )   // 14
+const int ID_close_or_right_parenthesis      = 1015;//( ) )   // 15
+const int ID_hyphen_or_minus                 = 1016;//(-)     // 16
+const int ID_underscore                      = 1017;//(_)     // 17 
+const int ID_open_brace_or_curly_bracket     = 1018;//({)     // 18
+const int ID_close_brace_or_curly_bracket    = 1019;//(})     // 19
+const int ID_open_bracket                    = 1020;//([)     // 20
+const int ID_close_bracket                   = 1021;//(])     // 21
+const int ID_single_line_comments            = 1022;//(//)    // 22
+const int ID_multi_line_comments_start       = 1023;//(/*)    // 23
+const int ID_multi_line_comments_end         = 1024;//(*/)    // 24
+const int ID_quotation_mark                  = 1025;//(")     // 25
+const int ID_question_mark                   = 1026;//(?)     // 26
+const int ID_tilde                           = 1027;//(~)     // 27
+const int ID_grather_than_equal              = 1028;//(>=)    // 28
+const int ID_less_than_equal                 = 1029;//(<=)    // 29
+const int ID_not_equal                       = 1030;//(!=)    // 30
+const int ID_plus_equal                      = 1031;//(>=)    // 31
+const int ID_minus_equal                     = 1032;//(>=)    // 32
+const int ID_pointer_or_multiplication       = 1033;//(*)     // 33
+const int ID_pointer_ampersand               = 1034;//(*&)    // 34
+const int ID_tab                             = 1035;//(	)     // 35
+const int ID_single_quote                    = 1036;//(')     // 36
+const int ID_insertion_operator              = 1037;//(<<)    // 37
+const int ID_extraction_operator             = 1038;//(>>)    // 38
+const int ID_assignment_operator             = 1039;//(>>)    // 39
+const int ID_increment_operator              = 1040;//(++)    // 40
+const int ID_decrement_operator              = 1041;//(-)     // 41
+struct Mapper        
+{
+	int ID;
+	string name;
+};
+vector<Mapper> VID;
+
+void InitIDs()
+{
+	Mapper m1;
+	m1.ID = ID_if;                                                          // 1 if
+	m1.name = "if";
+	VID.push_back(m1);
+	Mapper m2;
+	m2.ID=ID_else;                                                          // 2 else
+	m2.name="else";
+	VID.push_back(m2);
+	Mapper m3;
+	m3.ID=ID_asm;                                                           // 3 asm 
+	m3.name="asm";
+	VID.push_back(m3);
+    Mapper m4;
+	m4.ID=ID_auto;                                                          // 4 auto
+	m4.name="auto";
+	VID.push_back(m4);
+	Mapper m5;
+	m5.ID=ID_bool ;                                                         // 5 bool
+	m5.name="bool";
+	VID.push_back(m5);
+	Mapper m6;
+	m6.ID=ID_break;                                                         // 6 break
+	m6.name="break";
+	VID.push_back(m6);
+	Mapper m7;
+	m7.ID=ID_case;                                                          // 7 case
+	m7.name="case";
+	VID.push_back(m7);
+	Mapper m8;
+	m8.ID=ID_catch;                                                         // 8 catch
+	m8.name="catch";
+	VID.push_back(m8);
+	Mapper m9;
+	m9.ID=ID_char;                                                          // 9 char 
+	m9.name="char";
+	VID.push_back(m9);
+	Mapper m10;
+	m10.ID=ID_class;                                                        // 10 class
+	m10.name="class";
+	VID.push_back(m10);
+	Mapper m11;
+	m11.ID=ID_const;                                                        // 11 const 
+	m11.name="const";
+	VID.push_back(m11);
+	Mapper m12;
+	m12.ID=ID_continue;                                                     // 12 continue
+	m12.name="continue";
+	VID.push_back(m12);
+	Mapper m13;
+	m13.ID=ID_default;                                                      // 13 default
+	m13.name="default";
+	VID.push_back(m13);
+	Mapper m14;
+	m14.ID=ID_delete;                                                       // 14 delete
+	m14.name="delete";
+	VID.push_back(m14);
+	Mapper m15;
+	m15.ID=ID_do;                                                           // 15 do
+	m15.name="do";
+	VID.push_back(m15);
+	Mapper m16;
+	m16.ID=ID_double;                                                       // 16 double
+	m16.name="double";
+	VID.push_back(m16);
+	Mapper m17;
+	m17.ID=ID_enum;                                                         // 17 enum
+	m17.name="enum";
+	VID.push_back(m17);
+	Mapper m18;
+	m18.ID=ID_explicit;                                                     // 18 explicit
+	m18.name="explicit";
+	VID.push_back(m18);
+	Mapper m19;
+	m19.ID=ID_export;                                                       // 19 export
+	m19.name="export";
+	VID.push_back(m19);
+	Mapper m20;
+	m20.ID=ID_extern;                                                       // 20 extern
+	m20.name="expern";
+	VID.push_back(m20);
+	Mapper m21;
+	m21.ID=ID_float;                                                        // 21 float
+	m21.name="float";
+	VID.push_back(m21);
+	Mapper m22;
+	m22.ID=ID_for;                                                          // 22 for
+	m22.name="for";
+	VID.push_back(m22);
+	Mapper m23;
+	m23.ID=ID_friend;                                                       // 23 friend
+	m23.name="friend";
+	VID.push_back(m23);
+	Mapper m24;
+	m24.ID=ID_goto;                                                         // 24 goto
+	m24.name="goto";
+	VID.push_back(m24);
+	Mapper m25;
+	m25.ID=ID_inline;                                                       // 25 inline
+	m25.name="inline";
+	VID.push_back(m25);
+	Mapper m26;
+	m26.ID=ID_int;                                                          // 26 int
+	m26.name="int";
+	VID.push_back(m26);
+	Mapper m27;
+	m27.ID=ID_long;                                                         // 27 log
+	m27.name="long ";
+	VID.push_back(m27);
+	Mapper m28;
+	m28.ID=ID_mutable;                                                      // 28 mutable
+	m28.name="mutable";
+	VID.push_back(m28);
+	Mapper m29;
+	m29.ID=ID_namespace;                                                    // 29 namespace 
+	m29.name="namespace";
+	VID.push_back(m29);
+	Mapper m30;
+	m30.ID=ID_new;                                                          // 30 new
+	m30.name="new";
+	VID.push_back(m30);
+	Mapper m31;
+	m31.ID=ID_operator;                                                     // 31 opperator
+	m31.name="operator";
+	VID.push_back(m31);
+	Mapper m32;
+	m32.ID=ID_private;                                                      // 32 private
+	m32.name="private";
+	VID.push_back(m32);
+	Mapper m33;
+	m33.ID=ID_protected;                                                    // 33 protected
+	m33.name="protected";
+	VID.push_back(m33);
+	Mapper m34;
+	m34.ID=ID_public;                                                       // 34 public
+	m34.name="public";
+	VID.push_back(m34);
+	Mapper m35;
+	m35.ID=ID_register;                                                     // 35 register
+	m35.name="register";
+	VID.push_back(m35);
+	Mapper m36;
+	m36.ID=ID_return;                                                       // 36 return
+	m36.name="return";
+	VID.push_back(m36);
+	Mapper m37;
+	m37.ID=ID_short;                                                        // 37 short
+	m37.name="short";
+	VID.push_back(m37);
+	Mapper m38;
+	m38.ID=ID_signed;                                                       // 38 signed
+	m38.name="signed";
+	VID.push_back(m38);
+	Mapper m39;
+	m39.ID=ID_sizeof;                                                       // 39 sizeof
+	m39.name="sizeof";
+	VID.push_back(m39);
+	Mapper m40;
+	m40.ID=ID_static;                                                       // 40 static
+	m40.name="static";
+	VID.push_back(m40);
+	Mapper m41;
+	m41.ID=ID_struct;                                                       // 41 struct
+	m41.name="struct";
+	VID.push_back(m41);
+	Mapper m42;
+	m42.ID=ID_switch;                                                       // 42 switch
+	m42.name="switch";
+	VID.push_back(m42);
+	Mapper m43;
+	m43.ID=ID_template;                                                     // 43 template
+	m43.name="template";
+	VID.push_back(m43);
+	Mapper m44;
+	m44.ID=ID_this;                                                         // 44 this
+	m44.name="this";
+	VID.push_back(m44);
+	Mapper m45;
+	m45.ID=ID_throw;                                                        // 45 throw
+	m45.name="throw";
+	VID.push_back(m45);
+	Mapper m46;
+	m46.ID=ID_true;                                                         // 46 true
+	m46.name="true";
+	VID.push_back(m46);
+	Mapper m47;
+	m47.ID=ID_try;                                                          // 47 try
+	m47.name="try";
+	VID.push_back(m47);
+	Mapper m48;
+	m48.ID=ID_typedef;                                                      // 48 typedef
+	m48.name="typedef";
+	VID.push_back(m48);
+	Mapper m49;
+	m49.ID=ID_typeid;                                                       // 49 typeid 
+	m49.name="typeid";
+	VID.push_back(m49);
+	Mapper m50;
+	m50.ID=ID_typename;                                                     // 50 typename
+	m50.name="typename";
+	VID.push_back(m50);
+	Mapper m51;
+	m51.ID=ID_union;                                                        // 51 union
+	m51.name="union";
+	VID.push_back(m51);                                                  
+	Mapper m52;
+	m52.ID=ID_unsigned ;                                                    // 52 unsigned
+	m52.name="unsigned";
+	VID.push_back(m52);
+	Mapper m53;
+	m53.ID=ID_using;                                                        // 53 using 
+	m53.name="using";
+	VID.push_back(m53);
+	Mapper m54;
+	m54.ID=ID_virtual;                                                      // 54 virtual
+	m54.name="virtual";
+	VID.push_back(m54);
+	Mapper m55;
+	m55.ID=ID_void;                                                         // 55 void
+	m55.name="void";
+	VID.push_back(m55);
+	Mapper m56;
+	m56.ID=ID_volatile;                                                     // 56 volatile
+	m56.name="volatile";
+	VID.push_back(m56);
+	Mapper m57;
+	m57.ID=ID_while;                                                        // 57 while
+	m57.name="while";
+	VID.push_back(m57);
+	Mapper m58;
+	m58.ID=ID_wchar_t;                                                      // 58 Wchar_t
+	m58.name="wchar_t";
+	VID.push_back(m58);
+	Mapper m59;
+	m59.ID=ID_false;                                                        // 59 false
+	m59.name="false";
+	VID.push_back(m59);
+
+	//form this line symbols start
+
+	Mapper m60;
+	m60.ID=ID_hash;                                                          // 1 #
+	m60.name="#";
+	VID.push_back(m60);
+	Mapper m61; 
+	m61.ID=ID_space;                                                         // 2 ( )
+	m61.name=" ";
+	VID.push_back(m61);
+	Mapper m62;
+	m62.ID=ID_coma;                                                          // 3 ,
+	m62.name=","; 
+	VID.push_back(m62);
+	Mapper m63;
+	m63.ID=ID_colon ;                                                       // 4 :
+	m63.name=":";
+	VID.push_back(m63);
+	Mapper m64;
+	m64.ID=ID_semicolon;                                                    // 5  ;
+	m64.name=";";
+	VID.push_back(m64);
+	Mapper m65;
+	m65.ID=ID_dot;                                                          // 6 .
+	m65.name=".";
+	VID.push_back(m65);
+    Mapper m66;
+	m66.ID=ID_and_operator;                                                 // 7 &&
+	m66.name="&&";
+	VID.push_back(m66);
+	Mapper m67;
+	m67.ID=ID_or_operator;                                                  // 8 ||
+	m67.name="||";
+	VID.push_back(m67);
+	Mapper m68;
+	m68.ID=ID_equal_operator;                                               // 9 ==
+	m68.name="=="; 
+	VID.push_back(m68);
+	Mapper m69;
+	m69.ID=ID_plus_operator;                                                // 10 +
+	m69.name="+";
+	VID.push_back(m69);
+	Mapper m70;
+	m70.ID=ID_grather_than;                                                 // 11 >
+	m70.name=">";
+	VID.push_back(m70);
+	Mapper m71;  
+	m71.ID=ID_less_than;                                                    // 12 <
+	m71.name="<";
+	VID.push_back(m71);
+	Mapper m72;
+	m72.ID=ID_ampersand;                                                    // 13 &
+	m72.name="&";
+	VID.push_back(m72);
+	Mapper m73;
+	m73.ID=ID_open_or_left_parenthesis;                                     // 14 (
+	m73.name="(";
+	VID.push_back(m73);
+	Mapper m74;
+	m74.ID=ID_close_or_right_parenthesis;                                   // 15 )
+	m74.name=")";
+	VID.push_back(m74);
+	Mapper m75;
+	m75.ID=ID_hyphen_or_minus;                                             // 16  -
+	m75.name="-";
+	VID.push_back(m75);
+	Mapper m76;
+	m76.ID=ID_underscore;                                                   // 17 _
+	m76.name="_";
+	VID.push_back(m76);
+	Mapper m77;
+	m77.ID=ID_open_brace_or_curly_bracket;                                  // 18 {
+	m77.name="{";  
+	VID.push_back(m77);
+	Mapper m78;
+	m78.ID=ID_close_brace_or_curly_bracket;                                 // 19 }
+	m78.name="}";
+	VID.push_back(m78);
+	Mapper m79;
+	m79.ID=ID_open_bracket;                                                 // 20 [
+	m79.name="[";
+	VID.push_back(m79);
+	Mapper m80;
+	m80.ID=ID_close_bracket;                                                // 21 ]
+	m80.name="]";
+	VID.push_back(m80);
+	Mapper m81;
+	m81.ID=ID_single_line_comments;                                         // 22 //
+	m81.name="//";
+	VID.push_back(m81);
+	Mapper m82;
+	m82.ID=ID_multi_line_comments_start;                                    // 23 /*
+	m82.name="/*";
+	VID.push_back(m82);
+	Mapper m83;
+	m83.ID=ID_multi_line_comments_end;                                      // 24 */
+	m83.name="*/";
+	VID.push_back(m83);
+	Mapper m84;
+	m84.ID=ID_quotation_mark;                                               // 25 "
+	m84.name="quotation_mark";
+	VID.push_back(m84);
+	Mapper m85;
+	m85.ID=ID_question_mark;                                                // 26 ?
+	m85.name="?";
+	VID.push_back(m85);
+	Mapper m86;
+	m86.ID=ID_tilde ;                                                       // 27 ~
+	m86.name="~ "; 
+	VID.push_back(m86);
+	Mapper m87;
+	m87.ID=ID_less_than_equal;                                              // 28 <=
+	m87.name="<="; 
+	VID.push_back(m87);
+	Mapper m88;
+	m88.ID=ID_grather_than_equal;                                           // 29 >=
+	m88.name=">=";
+	VID.push_back(m88);
+	Mapper m89;
+	m89.ID=ID_not_equal;                                                    // 30 !=
+	m89.name="!="; 
+	VID.push_back(m89);
+	Mapper m90;
+	m90.ID=ID_plus_equal;                                                   // 31 +=
+	m90.name="+=";
+	VID.push_back(m90);
+	Mapper m91;
+	m91.ID=ID_minus_equal;                                                  // 32 -=
+	m91.name="-=";
+	VID.push_back(m91);
+	Mapper m92;
+	m92.ID=ID_pointer_or_multiplication;                                    // 33 *
+	m92.name="*";                                  
+	VID.push_back(m92);
+	Mapper m93;
+	m93.ID=ID_pointer_ampersand;                                            // 34 *&
+	m93.name="*&";
+	VID.push_back(m93);
+	Mapper m94;
+	m94.ID=ID_tab;                                                         // 35  (		)
+	m94.name="	";
+	VID.push_back(m94);
+	Mapper m95;
+	m95.ID=ID_single_quote;                                                // 36 (')
+	m95.name="'";
+	VID.push_back(m95);
+	Mapper m96;
+	m96.ID=ID_insertion_operator;                                          // 37  (<<)
+	m96.name="<<";
+	VID.push_back(m96);
+	Mapper m97;
+	m97.ID=ID_extraction_operator;                                         //  38 (>>)
+	m97.name=">>";
+	VID.push_back(m97);
+	Mapper m98;
+	m98.ID=ID_assignment_operator;                                         //  39 (=)
+	m98.name="=";
+	VID.push_back(m98);
+	Mapper m99;
+	m99.ID=ID_increment_operator;                                          // 40  (++)
+	m99.name="++";
+	VID.push_back(m99);
+	Mapper m100;
+	m100.ID=ID_decrement_operator;                                         // 41 (--)
+	m100.name="--";
+	VID.push_back(m100);
+}
+int GetID(string s)
+{
+	for(int i=0; i<VID.size(); i++)
+	{
+		if(VID[i].name == s)
+			return VID[i].ID;
+	}
+	return 0;
+}
+class token
+{
+public:
+	int tokenid;
+	string  tokenname;
+	int blockNO;
+	int paranthesis_level;
+	token()
+	{
+		tokenid=0;
+		tokenname=(" ");
+		blockNO=0;
+		paranthesis_level=0;
+	}
+	~token()
+	{
+
+	}
+};
+class CTokenizer
+{
+public:
+	vector<token> vt;
+void tokanized(vector<string> l)
+	{
+	int full_size=l.size()-1;
+	int n=0;
+	int i1=0;
+	int i2=0;
+	int i3=0;
+	int i4=0;
+	int i5=0;
+	int i6=0;
+	int i7=0;
+	int i8=0;
+	int i9=0;
+	int i10=0;
+	int i11=0;
+	int i12=0;
+	int i13=0;
+	int i14=0;
+	int i15=0;
+	int i16=0;
+	int i17=0;
+	int i18=0;
+	int i19=0;
+	int i20=0;
+	int i21=0;
+	int i22=0;
+	int i23=0;
+	int i24=0;
+	int i25=0;
+	int i26=0;
+	int n1=full_size;  
+	              //this is outer loop
+	              //this is for full size of string
+				  for(int i=0; i<=n1; i++)
+				  {
+					  //this is inner loop
+					  //this is for token size
+				  int token_size=l[i].length()-1;
+	              for(int j=0; j<=token_size; j++)
+			      {
+					  
+	                   if(l[i][j] == 32 )                                   // 1 this 32 is for space
+					   {
+						   token tk1;
+							int h1;
+							h1=GetID(" ");                                 // 1
+							tk1.tokenid=h1;
+							tk1.tokenname=" ";
+						    vt.push_back(tk1);
+					   }
+			           if(l[i][j] ==  46 )                                 // 2 this 46 is for dot (.)
+					   {
+						   token tk2;
+							int h2;
+							h2=GetID(".");                               // 2
+							tk2.tokenid=h2;
+							tk2.tokenname=".";
+						    vt.push_back(tk2);
+					   }
+				       if(l[i][j] == 58 )                                  // 3 this 58 is for colon (:)
+					   {
+						   {
+							token tk3;
+							int h3;
+							h3=GetID(":");                             // 3
+							tk3.tokenid=h3;
+	                     	tk3.tokenname=":";	
+						    vt.push_back(tk3);
+					   }
+					   }
+			           if(l[i][j] == 47 )                                  //  4 this 47 is single_line_comments (//)
+					   {
+							if(l[i+1][j+1] == 47)                          // this 47 is for single_line_comments (//)
+							{
+						    token tk4;
+	                        int h4;
+							h4=GetID("//");              // 4
+							tk4.tokenid=h4;                                   
+	                     	tk4.tokenname="//";
+						    vt.push_back(tk4);
+					        }
+							else if(l[i-1][j-1] == 42)
+							{
+							token tk4vc;
+	                        int h4vc;
+							h4vc=GetID("*/");         // 5
+							tk4vc.tokenid=h4vc;                                      
+	                     	tk4vc.tokenname="*/";
+						    vt.push_back(tk4vc);
+							}
+							else if(l[i+1][j+1] == 42)
+							{
+							token tk4gf;
+	                        int h4gf;
+							h4gf=GetID("/*");       // 6
+							tk4gf.tokenid=h4gf;                                          
+	                     	tk4gf.tokenname="/*";	
+					     	vt.push_back(tk4gf);
+							}
+							  
+					   }
+			           if(l[i][j] == 35 )                                  //  5 this 35 for ( # )
+				         {
+							 token tk5;
+	                     	int h5;
+							h5=GetID("#");                              // 7
+							tk5.tokenid=h5;
+							tk5.tokenname="#";
+						    vt.push_back(tk5);
+					   }
+			           if(l[i][j] == 34 )                                   //  6 this 34 quotation mark (")
+					   {
+					        token tk6;
+	                        int h6;
+							h6=GetID("?");                    // 8
+							tk6.tokenid=h6;
+	                     	tk6.tokenname="?";	
+						    vt.push_back(tk6);
+					   }
+			           if(l[i][j] == 60  )                                 //  7 this 60 is grster  ( < )
+				         {
+							    if(l[i+1][j+1] == 61)                      // this is for <=
+								 {
+									 token tk7t;
+	                          int h7t;
+							  h7t=GetID("<=");                // 9
+							  tk7t.tokenid=h7t;
+	                     	  tk7t.tokenname="<=";	
+						      vt.push_back(tk7t);
+					           }
+								else  if(l[i+1][j+1] == 60)                // this is for <<
+							 {
+							  token tk7po;
+	                          int h7po;
+							  h7po=GetID("<<");           // 10
+							  tk7po.tokenid=h7po;
+	                     	  tk7po.tokenname="<<";	
+						      vt.push_back(tk7po);
+					   }
+								else
+							{ 
+							  token tk7;
+	                          int h7;
+							  h7=GetID("<");                    //  11
+							  tk7.tokenid=h7;
+	                     	  tk7.tokenname="<";
+						      vt.push_back(tk7);
+					   }
+								}
+			           if(l[i][j] == 62 )                                  //  8 this 62 is less    ( > )
+				         {
+							 if(l[i+1][j+1] == 61)                         // this is for >=
+							 {
+								 token tk8jf;
+	                           int h8jf;
+							h8jf=GetID(">=");              // 12
+							tk8jf.tokenid=h8jf;
+	                     	tk8jf.tokenname=">=";
+						    vt.push_back(tk8jf);
+							 }
+							 else  if(l[i+1][j+1] == 62)                   // this is for >>
+							 {
+								 token tk8jk;
+	                           int h8jk;
+							h8jk=GetID(">>");             // 13
+							tk8jk.tokenid=h8jk;
+	                     	tk8jk.tokenname=">>";
+						    vt.push_back(tk8jk);
+							 }
+							else
+							{
+							token tk8;
+	                        int h8;
+							h8=GetID(">");                      // 14
+							tk8.tokenid=h8;
+	                     	tk8.tokenname=">";
+						    vt.push_back(tk8);
+					   }
+							}
+			           if(l[i][j] == 59 )                                  //  9 this 59 is for  semicolon ( ; )
+				         {
+							token tk9;
+	                        int h9;
+							h9=GetID(";");                         // 15
+							tk9.tokenid=h9;
+	                     	tk9.tokenname=";";
+						    vt.push_back(tk9);
+					   }
+			           if(l[i][j] == 123 )                                 //  10 this 123 is for dot ( { )
+				         {
+							token tk10;
+	                        int h10;
+							h10=GetID("{");// 16
+							tk10.tokenid=h10;
+	                        tk10.tokenname="{";	
+						    vt.push_back(tk10);
+					   }
+			           if(l[i][j] == 42 )                                  //  11 this 42 is for multiplication ( * )
+					      {
+							  if(l[i+1][j+1] == 38)                        // this is for *&
+							  {
+								  token tk11cb;
+	                        int h11cb;
+							h11cb=GetID("*&");              // 17
+							tk11cb.tokenid=h11cb;
+	                     	tk11cb.tokenname="*&";
+						    vt.push_back(tk11cb);
+					   }
+							  else
+							  {
+						    token tk11;
+	                        int h11;
+							h11=GetID("*");        // 18
+							tk11.tokenid=h11; 
+	                     	tk11.tokenname="*";
+						    vt.push_back(tk11);
+					   }
+						 }
+			           if(l[i][j] == 9 )                                   //  12 this 9 is tab
+                         {
+							 token tk12;
+	                        int h12;
+							h12=GetID("	");                              // 19
+							tk12.tokenid=h12;
+	                     	tk12.tokenname="	";	
+						    vt.push_back(tk12);
+					   }
+			           if(l[i][j] == 40 )                                  //  13 this 40 is for small braket ( ( )
+				         {
+							token tk13;
+	                        int h13;
+							h13=GetID("(");         // 20
+							tk13.tokenid=h13;
+	                     	tk13.tokenname="(";
+						    vt.push_back(tk13);
+					   }
+			           if(l[i][j] == 41 )                                  //  14 this 41 is for small bracket ( ) )
+				         {
+							token tk14;
+	                        int h14;
+							h14=GetID(")");       // 21
+							tk14.tokenid=h14;
+	                     	tk14.tokenname=")";
+						    vt.push_back(tk14);
+					   }
+			           if(l[i][j] == 61 )                                  //  15 this 61 is for equal to ( = )
+				         {
+								if(l[i+1][j+1] == 61)                      // this 61 is for equal to ( == )
+								{
+							token tk15;
+	                        int h15;
+							h15=GetID("==");                   // 22
+							tk15.tokenid=h15;
+	                     	tk15.tokenname="==";
+						    vt.push_back(tk15);
+					   }
+								else
+								{
+							token tk15yu;
+	                        int h15yu;
+							h15yu=GetID("=");            // 23
+							tk15yu.tokenid=h15yu;
+	                     	tk15yu.tokenname="=";
+						    vt.push_back(tk15yu);
+					   }
+							 }
+
+			           if(l[i][j] == 125 )                                 //  16 this 125 is for curli bracket ( } )
+				         {
+							token tk16;
+	                        int h16;
+							h16=GetID("}");     // 24
+							tk16.tokenid=h16;
+							tk16.tokenname="}";
+						    vt.push_back(tk16);
+					   }
+				       if(l[i][j] == 38 )                                  //  17 this 38 is for and ( & )
+				         {
+								if(l[i+1][j+1]==38)
+								{
+							token tk17;
+	                        int h17;
+							h17=GetID("&&");                     // 25
+							tk17.tokenid=h17; 
+	                     	tk17.tokenname="&&";
+						    vt.push_back(tk17);
+					   }
+								else
+									{
+							token tk17wq;
+	                        int h17wq;
+							h17wq=GetID("&");                      // 26
+							tk17wq.tokenid=h17wq;
+	                     	tk17wq.tokenname="&";
+						    vt.push_back(tk17wq);
+					   }
+							  }
+				       if(l[i][j] == 124 )                                 //  18 this 124 is or operator ( | )
+				         {
+							if(l[i][j] == 124) 
+							{
+							token tk18;
+	                        int h18;
+							h18=GetID("||");                      // 27
+							tk18.tokenid=h18;
+	                     	tk18.tokenname="||";
+						    vt.push_back(tk18);
+					   }
+							  }
+							
+				       if(l[i][j] == 91 )                                  //  19 this 91 is for large bracket ( [ )
+				         {
+							token tk19;
+	                        int h19;
+							h19=GetID("[");                     // 28
+							tk19.tokenid=h19;
+	                     	tk19.tokenname="[";
+						    vt.push_back(tk19);
+					   }
+				       if(l[i][j] == 93 )                                  //  20 this 93 is for large bracket ( ] )
+				         {
+							token tk20;
+	                        int h20;
+							h20=GetID("]");                    // 29
+							tk20.tokenid=h20;
+	                     	tk20.tokenname="]";
+						    vt.push_back(tk20);
+					   }
+				       if(l[i][j] == 95 )                                  //  21 this 95 is for large bracket ( _ )
+			             {
+							token tk21;
+	                        int h21;
+							h21=GetID("_");                       // 30
+							tk21.tokenid=h21;
+	                     	tk21.tokenname="_";
+						    vt.push_back(tk21);
+					   }
+				       if(l[i][j] == 44 )                                  //  22 this 44 is for  ( , )
+			             {
+							token tk22;
+	                        int h22;
+							h22=GetID(",");                            // 31
+							tk22.tokenid=h22;
+	                     	tk22.tokenname=",";
+						    vt.push_back(tk22);
+					   }
+				       if(l[i][j] == 43 )                                  //  23 this 43 is for plus ( + )
+			             {
+								if(l[i+1][j+1] == 61)                     // this is for plus_equal +=
+								{
+									token tk23nm;
+	                        int h23nm;
+							h23nm=GetID("+=");                    // 32
+							tk23nm.tokenid=h23nm; 
+	                     	tk23nm.tokenname="+=";
+						    vt.push_back(tk23nm);
+								}
+								else	if(l[i+1][j+1] == 43)             // this is for ++
+								{
+							token tk23ty;
+	                        int h23ty;
+							h23ty=GetID("++");            // 33
+							tk23ty.tokenid=h23ty;
+	                     	tk23ty.tokenname="++";
+						    vt.push_back(tk23ty);
+								}
+								else
+								{
+							token tk23;
+	                        int h23;
+							h23=GetID("+");                   // 34
+							tk23.tokenid=h23;
+	                     	tk23.tokenname="+";
+						    vt.push_back(tk23);
+					   }
+							 }
+				       if(l[i][j] == 45)                                   //  24 this 45 is for minus ( - )
+			             {
+								if(l[i+1][j+1] == 61)                  //this 45 is for minus equal  -=
+								{
+									token tk24e;
+	                        int h24e;
+							h24e=GetID("-=");                    // 35
+							tk24e.tokenid=h24e;
+	                     	tk24e.tokenname="-=";
+						    vt.push_back(tk24e);
+
+								}
+							   else	if(l[i+1][j+1] == 45)                  // this --
+								{
+							token tk24re;
+	                        int h24re;
+							h24re=GetID("--");            // 36
+							tk24re.tokenid=h24re;
+	                     	tk24re.tokenname="--";
+						    vt.push_back(tk24re);
+					   }
+								else
+								{
+									token tk24;
+	                        int h24;
+							h24=GetID("-");                // 37
+							tk24.tokenid=h24;
+	                     	tk24.tokenname="-";
+						    vt.push_back(tk24);
+								}
+							   }
+				       if(l[i][j] == 33 )                                  //  25 this 33 is for  ( ! )
+			             {
+								if(l[i+1][j+1]==61)
+								{
+							token tk25;
+	                        int h25;
+							h25=GetID("!=");                       // 38
+							tk25.tokenid=h25;
+	                     	tk25.tokenname="!=";
+						    vt.push_back(tk25);
+					   }
+						}
+				       if(l[i][j] == 39)                                   // 26 this 39 is for single_quote  ( ' )
+			            {
+							token tk26;
+	                        int h26;
+							h26=GetID("'");                    // 39
+							tk26.tokenid=h26;
+	                     	tk26.tokenname="'";
+						    vt.push_back(tk26);
+					   }
+					   if(l[i][j] == 126)                                  // 27 this 126 is for tilde ( ~ ) 
+			            {
+							token tk27;
+	                        int h27;
+							h27=GetID("~");                           // 40
+							tk27.tokenid=h27;
+	                     	tk27.tokenname="~";
+						    vt.push_back(tk27);
+					   }
+					   if(l[i][j] == 63)                                   // 28 this 63 is for question mark ( ?) 
+			            {
+							token tk28;
+	                        int h28;
+							h28=GetID("?");                           // 41
+							tk28.tokenid=h28;
+	                     	tk28.tokenname="?";
+						    vt.push_back(tk28);
+					   }
+
+					   string s1 = "if";
+					   string s2 = l[i];
+
+					   if(s2==s1)                                          // 29 this is for if
+					   {
+						     token tn1;
+	                        int ho1;
+							ho1=GetID("if");                              // 42
+							tn1.tokenid=ho1;
+	                     	tn1.tokenname="if";	
+							vt.push_back(tn1);
+							break;
+
+					   }
+					   string s3 = "else";
+					   string s4 = l[i];
+					  if(s3==s4)                                           // 30 this is for else
+					  {
+						  token tn2;
+	                      int ho2;
+					      ho2=GetID("else");                              // 43
+						  tn2.tokenid=ho2;
+	                      tn2.tokenname="else";	
+						  vt.push_back(tn2);
+						  break;
+					  }
+					   string s5 = "asm";
+					   string s6 = l[i];
+					  if(s5==s6)                                           // 31 this is for asm
+					  {
+						  token tn3;
+	                      int ho3;
+					      ho3=GetID("asm");                               // 44
+						  tn3.tokenid=ho3;
+	                      tn3.tokenname="asm";	
+						  vt.push_back(tn3);
+						  break;
+					  }
+					  string s7 = "auto";
+					   string s8 = l[i];
+					  if(s7==s8)                                            // 32 this is for auto
+					  {
+						  token tn4;
+	                      int ho4;
+					      ho4=GetID("auto");                              // 45
+						  tn4.tokenid=ho4;
+	                      tn4.tokenname="auto";	
+						  vt.push_back(tn4);
+						  break;
+					  }
+					  string s9 = "bool";
+					   string s10 = l[i];
+					  if(s9==s10)                                          // 33 this is for bool
+					  {
+						  token tn5;
+	                      int ho5;
+					      ho5=GetID("bool");                              // 46
+						  tn5.tokenid=ho5;
+	                      tn5.tokenname="bool";	
+						  vt.push_back(tn5);
+						  break;
+					  }
+					  string s11 = "break";
+					   string s12 = l[i];
+					  if(s11==s12)                                          // 34 this is for break
+					  {
+						  token tn6;
+	                      int ho6;
+					      ho6=GetID("break");                             // 47
+						  tn6.tokenid=ho6;
+	                      tn6.tokenname="break";	
+						  vt.push_back(tn6);
+						  break;
+					  }
+					  string s13 = "case";
+					   string s14 = l[i];
+					  if(s13==s14)                                         // 35 this is for case
+					  {
+						  token tn7;
+	                      int ho7;
+					      ho7=GetID("case");                              // 48
+						  tn7.tokenid=ho7;
+	                      tn7.tokenname="case";	
+						  vt.push_back(tn7);
+						  break;
+					  }
+					  string s15 = "catch";
+					   string s16 = l[i];
+					  if(s15==s16)                                         // 36 this is for catch
+					  {
+						  token tn8;
+	                      int ho8;
+					      ho8=GetID("catch");                             // 49
+						  tn8.tokenid=ho8;
+	                      tn8.tokenname="catch";	
+						  vt.push_back(tn8);
+						  break;
+					  }
+					  string s17 = "char";
+					   string s18 = l[i];
+					  if(s17==s18)                                         // 37 this is for char
+					  {
+						  token tn9;
+	                      int ho9;
+					      ho9=GetID("char");                              // 50
+						  tn9.tokenid=ho9;
+	                      tn9.tokenname="char";	
+						  vt.push_back(tn9);
+						  break;
+					  }
+					  string s19 = "class";
+					   string s20 = l[i];
+					  if(s19==s20)                                         // 38 this is for class
+					  {
+						  token tn10;
+	                      int ho10;
+					      ho10=GetID("class");                            // 51
+						  tn10.tokenid=ho10;
+	                      tn10.tokenname="class";	
+						  vt.push_back(tn10);
+						  break;
+					  }
+					  string s21 = "const";
+					  string s22 = l[i];
+					  if(s21==s22)                                         // 39 this is for const
+					  {
+						  token tn11;
+	                      int ho11;
+					      ho11=GetID("const");                            // 52
+						  tn11.tokenid=ho11;
+	                      tn11.tokenname="const";	
+						  vt.push_back(tn11);
+						  break;
+					  }
+					  string s23 = "continue";
+					   string s24 = l[i];
+					  if(s23==s24)                                         // 40 this is for continue
+					  {
+						  token tn12;
+	                      int ho12;
+					      ho12=GetID("continue");                         // 53
+						  tn12.tokenid=ho12;
+	                      tn12.tokenname="continue";	
+						  vt.push_back(tn12);
+						  break;
+					  }
+					  string s25 = "default";
+					   string s26 = l[i];
+					  if(s25==s26)                                         // 41 this is for default
+					  {
+						  token tn13;
+	                      int ho13;
+					      ho13=GetID("default");                          // 54
+						  tn13.tokenid=ho13;
+	                      tn13.tokenname="default";	
+						  vt.push_back(tn13);
+						  break;
+					  }
+					  string s27 = "delete";
+					   string s28 = l[i];
+					  if(s27==s28)                                         // 42 this is for delete
+					  {
+						  token tn14;
+	                      int ho14;
+					      ho14=GetID("delete");                           // 55
+						  tn14.tokenid=ho14;
+	                      tn14.tokenname="delete";	
+						  vt.push_back(tn14);
+						  break;
+					  }
+					   string s29 = "do";
+					   string s30 = l[i];
+					  if(s29==s30)                                         // 43 this is for do
+					  {
+						   token tn15;
+	                      int ho15;
+					      ho15=GetID("do");                               // 56
+						  tn15.tokenid=ho15;
+	                      tn15.tokenname="do";	
+						  vt.push_back(tn15);
+						  break;
+					  }
+					  string s31 = "double";
+					   string s32 = l[i];
+					  if(s31==s32)                                         // 44 this is for double
+					  {
+						  token tn16;
+	                      int ho16;
+					      ho16=GetID("double");                           // 57
+						  tn16.tokenid=ho16;
+	                      tn16.tokenname="double";	
+						  vt.push_back(tn16);
+						  break;
+
+					  }
+					  string s33 = "enum";
+					   string s34 = l[i];
+					  if(s33==s34)                                         // 45 this is for enum
+					  {
+						  token tn17;
+	                      int ho17;
+					      ho17=GetID("enum");                             // 58
+						  tn17.tokenid=ho17;
+	                      tn17.tokenname="enum";	
+						  vt.push_back(tn17);
+						  break;
+					  }
+					  string s35 = "explicit";
+					   string s36 = l[i];
+					  if(s35==s36)                                         // 46 this is for explicit
+					  {
+						  token tn18;
+	                      int ho18;
+					      ho18=GetID("explicit");                         // 59
+						  tn18.tokenid=ho18;
+	                      tn18.tokenname="explicit";	
+						  vt.push_back(tn18);
+						  break;
+					  }
+					  string s37 = "export";
+					   string s38 = l[i];
+					  if(s37==s38)                                          // 47 this is for export
+					  {
+						  token tn19;
+	                      int ho19;
+					      ho19=GetID("export");                           // 60
+						  tn19.tokenid=ho19;
+	                      tn19.tokenname="export";	
+						  vt.push_back(tn19);
+						  break;
+					  }
+					  string s39 = "extern";
+					   string s40 = l[i];
+					  if(s39==s40)                                          // 48 this is for extern
+					  {
+						   token tn20;
+	                      int ho20;
+					      ho20=GetID("extern");                           // 61
+						  tn20.tokenid=ho20;
+	                      tn20.tokenname="extern";	
+						  vt.push_back(tn20);
+						  break;
+					  }
+					  string s41 = "float";
+					   string s42 = l[i];
+					  if(s41==s42)                                          // 49 this is for float
+					  {
+						  token tn21;
+	                      int ho21;
+					      ho21=GetID("float");                            // 62
+						  tn21.tokenid=ho21;
+	                      tn21.tokenname="float";	
+						  vt.push_back(tn21);
+						  break;
+					  }
+					  string s43 = "for";
+					   string s44 = l[i];
+					  if(s43==s44)                                          // 50 this is for for
+					  {
+						  token tn22;
+	                      int ho22;
+					      ho22=GetID("for");                              // 63
+						  tn22.tokenid=ho22;
+	                      tn22.tokenname="for";	
+						  vt.push_back(tn22);
+						  break;
+					  }
+					  string s45 = "friend";
+					   string s46 = l[i];
+					  if(s45==s46)                                          // 51 this is for friend
+					  {
+						  token tn23;
+	                      int ho23;
+					      ho23=GetID("friend");                           // 64
+						  tn23.tokenid=ho23;
+	                      tn23.tokenname="friend";	
+						  vt.push_back(tn23);
+						  break;
+					  }
+					  string s47 = "goto";
+					   string s48 = l[i];
+					  if(s47==s48)                                         // 52 this is for goto
+					  {
+						  token tn24;
+	                      int ho24;
+					      ho24=GetID("goto");                             // 65
+						  tn24.tokenid=ho24;
+	                      tn24.tokenname="goto";	
+						  vt.push_back(tn24);
+						  break;
+					  }
+					  string s49 = "inline";
+					   string s50 = l[i];
+					  if(s49==s50)                                         // 53 this is for inline
+					  {
+						  token tn25;
+	                      int ho25;
+					      ho25=GetID("inline");                           // 66
+						  tn25.tokenid=ho25;
+	                      tn25.tokenname="inline";	
+						  vt.push_back(tn25);
+						  break;
+					  }
+					  string s51 = "int";
+					   string s52 = l[i];
+					  if(s51==s52)                                         // 54 this is for int
+					  {
+						  token tn26;
+	                      int ho26;
+					      ho26=GetID("int");                              // 67
+						  tn26.tokenid=ho26;
+	                      tn26.tokenname="int";	
+						  vt.push_back(tn26);
+						  break;
+					  }
+					  string s53 = "long";
+					   string s54 = l[i];
+					  if(s53==s54)                                         // 55 this is for long
+					  {
+						  token tn27;
+	                      int ho27;
+					      ho27=GetID("long");                             // 68
+						  tn27.tokenid=ho27;
+	                      tn27.tokenname="long";	
+						  vt.push_back(tn27);
+						  break;
+					  }
+					  string s55 = "mutable";
+					   string s56 = l[i];
+					  if(s55==s56)                                         // 56 this is for mutable
+					  {
+						  token tn28;
+	                      int ho28;
+					      ho28=GetID("mutable");                          // 69
+						  tn28.tokenid=ho28;
+	                      tn28.tokenname="mutable";	
+						  vt.push_back(tn28);
+						  break;
+					  }
+					  string s57 = "namespace";
+					   string s58 = l[i];
+					  if(s57==s58)                                         // 57 this is for namespace
+					  {
+						  token tn29;
+	                      int ho29;
+					      ho29=GetID("namespace");                        // 70
+						  tn29.tokenid=ho29;
+	                      tn29.tokenname="namespace";	
+						  vt.push_back(tn29);
+						  break;
+					  }
+					  string s59 = "new";
+					   string s60 = l[i];
+					  if(s59==s60)                                          // 58 this is for new
+					  {
+						  token tn30;
+	                      int ho30;
+					      ho30=GetID("new");                              // 71
+						  tn30.tokenid=ho30;
+	                      tn30.tokenname="new";	
+						  vt.push_back(tn30);
+						  break;
+					  }
+					  string s61 = "operator";
+					   string s62 = l[i];
+					  if(s61==s62)                                         // 59 this is for operator
+					  {
+						  token tn31;
+	                      int ho31;
+					      ho31=GetID("operator");                         // 72
+						  tn31.tokenid=ho31;
+	                      tn31.tokenname="operator";	
+						  vt.push_back(tn31);
+						  break;
+					  }
+					  string s63 = "private";
+					   string s64 = l[i];
+					  if(s63==s64)                                         // 60 this is for private
+					  {
+						  token tn32;
+	                      int ho32;
+					      ho32=GetID("private");                          // 73
+						  tn32.tokenid=ho32;
+	                      tn32.tokenname="private";	
+						  vt.push_back(tn32);
+						  break;
+					  }
+					  string s65 = "protected";
+					   string s66 = l[i];
+					  if(s65==s66)                                         // 61 this is for protected
+					  {
+						  token tn33;
+	                      int ho33;
+					      ho33=GetID("protected");                        // 74
+						  tn33.tokenid=ho33;
+	                      tn33.tokenname="protected";	
+						  vt.push_back(tn33);
+						  break;
+					  }
+					  string s67 = "public";
+					   string s68 = l[i];
+					  if(s67==s68)                                        // 62 this is for public
+					  {
+						  token tn34;
+	                      int ho34;
+					      ho34=GetID("public");                           // 75
+						  tn34.tokenid=ho34;
+	                      tn34.tokenname="public";	
+						  vt.push_back(tn34);
+						  break;
+					  }
+					  string s69 = "register";
+					   string s70 = l[i];
+					  if(s69==s70)                                         // 63 this is for register
+					  {
+						  token tn35;
+	                      int ho35;
+					      ho35=GetID("register");                         // 76
+						  tn35.tokenid=ho35;
+	                      tn35.tokenname="register";	
+						  vt.push_back(tn35);
+						  break;
+					  }
+					  string s71 = "return";
+					   string s72 = l[i];
+					  if(s71==s72)                                         // 64 this is for return
+					  {
+						  token tn36;
+	                      int ho36;
+					      ho36=GetID("return");                          // 77
+						  tn36.tokenid=ho36;
+	                      tn36.tokenname="return";	
+						  vt.push_back(tn36);
+						  break;
+					  }
+					  string s73 = "short";
+					   string s74 = l[i];
+					  if(s73==s74)                                         // 65 this is for short
+					  {
+						  token tn37;
+	                      int ho37;
+					      ho37=GetID("short");                            // 78
+						  tn37.tokenid=ho37;
+	                      tn37.tokenname="short";	
+						  vt.push_back(tn37);
+						  break;
+					  }
+					  string s75 = "signed";
+					   string s76 = l[i];
+					  if(s75==s76)                                         // 66 this is for signed
+					  {
+						  token tn38;
+						  int ho38;                                                  
+						  tn38.tokenid=ho38;		                      // 79
+					      ho38=GetID("signed"); 
+	                      tn38.tokenname="signed";	
+						  vt.push_back(tn38);
+						  break;
+					  }
+					  string s77 = "sizeof";
+					   string s78 = l[i];
+					  if(s77==s78)                                         // 67 this is for sizeof
+					  {
+						  token tn39;
+	                      int ho39;
+					      ho39=GetID("sizeof");                           // 80
+						  tn39.tokenid=ho39;
+	                      tn39.tokenname="sizeof";	
+						  vt.push_back(tn39);
+						  break;
+					  }
+					  string s79 = "static";
+					   string s80 = l[i];
+					  if(s79==s80)                                         // 68 this is for static
+					  {
+						  token tn40;
+	                      int ho40;
+					      ho40=GetID("static");                           // 81
+						  tn40.tokenid=ho40;
+	                      tn40.tokenname="static";	
+						  vt.push_back(tn40);
+						  break;
+					  }
+					  string s81 = "struct";
+					   string s82 = l[i];
+					  if(s81==s82)                                         // 69 this is for struct
+					  {
+						  token tn41;
+	                      int ho41;
+					      ho41=GetID("struct");                           // 82
+						  tn41.tokenid=ho41;
+	                      tn41.tokenname="struct";	
+						  vt.push_back(tn41);
+						  break;
+					  }
+					  string s83 = "switch";
+					   string s84 = l[i];
+					  if(s83==s84)                                        // 70 this is for switch
+					  {
+						  token tn42;
+	                      int ho42;
+					      ho42=GetID("switch");                           // 83
+						  tn42.tokenid=ho42;
+	                      tn42.tokenname="switch";	
+						  vt.push_back(tn42);
+						  break;
+					  }
+					  string s85 = "template";
+					   string s86 = l[i];
+					  if(s85==s86)                                        // 71 this is for template
+					  {
+						  token tn43;
+	                      int ho43;
+					      ho43=GetID("template");                         // 84
+						  tn43.tokenid=ho43;
+	                      tn43.tokenname="template";	
+						  vt.push_back(tn43);
+						  break;
+					  }
+					  string s87 = "this";
+					   string s88 = l[i];
+					  if(s87==s88)                                        // 72 this is for this
+					  {
+						  token tn44;
+	                      int ho44;
+					      ho44=GetID("this");                             // 85
+						  tn44.tokenid=ho44;
+	                      tn44.tokenname="this";	
+						  vt.push_back(tn44);
+						  break;
+					  }
+					  string s89 = "throw";
+					   string s90 = l[i];
+					  if(s89==s90)                                        // 73 this is for throw
+					  {
+						  token tn45;
+	                      int ho45;
+					      ho45=GetID("throw");                            // 86
+						  tn45.tokenid=ho45;
+	                      tn45.tokenname="throw";	
+						  vt.push_back(tn45);
+						  break;
+					  }
+					  string s91 = "true";
+					   string s92 = l[i];
+					  if(s91==s92)                                        // 74 this is for true
+					  {
+						  token tn46;
+	                      int ho46;
+					      ho46=GetID("true");                             // 87
+						  tn46.tokenid=ho46;
+	                      tn46.tokenname="true";	
+						  vt.push_back(tn46);
+						  break;
+					  }
+					  string s93 = "try";
+					  string s94 = l[i];
+					  if(s93==s94)                                        // 75 this is for try
+					  {
+						  token tn47;
+	                      int ho47;
+					      ho47=GetID("try");                              // 88
+						  tn47.tokenid=ho47;
+	                      tn47.tokenname="try";	
+						  vt.push_back(tn47);
+						  break;
+					  }
+					  string s95 = "typedef";
+					  string s96 = l[i];
+					  if(s95==s96)                                         // 76 this is for typedef
+					  {
+						  token tn48;
+	                      int ho48;
+					      ho48=GetID("typedef");                          // 89
+						  tn48.tokenid=ho48;
+	                      tn48.tokenname="typedef";	
+						  vt.push_back(tn48);
+						  break;
+					  }
+					  string s97 = "typeid";
+					   string s98 = l[i];
+					  if(s97==s98)                                         // 77 this is for typeid
+					  {
+						  token tn49;
+	                      int ho49;
+					      ho49=GetID("typeid");                           // 90
+						  tn49.tokenid=ho49;
+	                      tn49.tokenname="typeid";	
+						  vt.push_back(tn49);
+						  break;
+					  }
+					  string s99 = "typename";
+					   string s100 = l[i];
+					  if(s99==s100)                                        // 78 this is for typename
+					  {
+						  token tn50;
+	                      int ho50;
+					      ho50=GetID("typename");                         // 91
+						  tn50.tokenid=ho50;
+	                      tn50.tokenname="typename";	
+						  vt.push_back(tn50);
+						  break;
+					  }
+					  string s1q = "union";
+					   string s2q = l[i];
+					  if(s1q==s2q)                                        // 79 this is for union
+					  {
+						  token tn51;
+	                      int ho51;
+					      ho51=GetID("union");                            // 92
+						  tn51.tokenid=ho51;
+	                      tn51.tokenname="union";	
+						  vt.push_back(tn51);
+						  break;
+					  }
+					  string s3q = "unsigned";
+					   string s4q = l[i];
+					  if(s3q==s4q)                                         // 80 this is for unsigned
+					  {
+						  token tn52;
+	                      int ho52;
+					      ho52=GetID("unsigned");                         // 93
+						  tn52.tokenid=ho52;
+	                      tn52.tokenname="unsigned";	
+						  vt.push_back(tn52);
+						  break;
+					  }
+					  string s5q = "using";
+					   string s6q = l[i];
+					  if(s5q==s6q)                                        // 81 this is for using
+					  {
+						  token tn53;
+	                      int ho53;
+					      ho53=GetID("using");                            // 94
+						  tn53.tokenid=ho53;
+	                      tn53.tokenname="using";	
+						  vt.push_back(tn53);
+						  break;
+					  }
+					  string s7q = "virtual";
+					   string s8q = l[i];
+					  if(s7q==s8q)                                        // 82 this is for virtual
+					  {
+						  token tn54;
+	                      int ho54;
+					      ho54=GetID("virtual");                          // 95
+						  tn54.tokenid=ho54;
+	                      tn54.tokenname="virtual";	
+						  vt.push_back(tn54);
+						  break;
+					  }
+					  string s9q = "void";
+					  string s10q = l[i];
+					  if(s9q==s10q)                                       // 83 this is for void
+					  {
+						  token tn55;
+	                      int ho55;
+					      ho55=GetID("void");                             // 96
+						  tn55.tokenid=ho55;
+	                      tn55.tokenname="void";	
+						  vt.push_back(tn55);
+						  break;
+					  }
+					  string s11q = "volatile";
+					   string s12q = l[i];
+					  if(s11q==s12q)                                      // 84 this is for volatile
+					   {
+						   token tn56;
+	                      int ho56;
+					      ho56=GetID("volatile");                         // 97
+						  tn56.tokenid=ho56;
+	                      tn56.tokenname="volatile";	
+						  vt.push_back(tn56);
+						  break;
+					   }
+					     string s13q = "while";
+					     string s14q = l[i];
+					    if(s13q==s14q)                                       // 85 this is for while
+						{
+							token tn57;
+	                      int ho57;
+					      ho57=GetID("while");                            // 98
+						  tn57.tokenid=ho57;
+	                      tn57.tokenname="while";	
+						  vt.push_back(tn57);
+						  break;
+						}
+					  string s15q = "wchar_t";
+					  string s16q = l[i];
+					  if(s15q==s16q)                                       // 86 this is for wchar_t
+					  {
+						  token tn58;
+	                      int ho58;
+					      ho58=GetID("wchar_t");                          // 99
+						  tn58.tokenid=ho58;
+	                      tn58.tokenname="wchar_t";	
+						  vt.push_back(tn58);
+						  break;
+					  }
+					  string sq1 = "false";
+					  string sq2 = l[i];
+					  if(sq1==sq2)                                       // 87 this is for false
+					  {
+						  token tn59;
+	                      int ho59;
+					      ho59=GetID("false");                          // 100
+						  tn59.tokenid=ho59;
+	                      tn59.tokenname="false";	
+						  vt.push_back(tn59);
+						  break;
+					  }
+					  if(l[i][j]==40)
+					  {
+						  token tr1;
+						  tr1.paranthesis_level++;
+					  }
+					   if(l[i][j]==41)
+					  {
+						  token tr2;
+						  tr2.paranthesis_level--;
+					  }
+					    if(l[i][j]==123)
+					  {
+						  token tr3;
+						  tr3.paranthesis_level++;
+					  }
+						if(l[i][j]==125)
+					  {
+						  token tr4;
+						  tr4.paranthesis_level--;
+					  }
+ 				  }
+				   n++;
+				  } 
+				  
+	}
+	~CTokenizer()
+	{
+
+	}
+	};
+class CCommon_Base
+{
+public:string name;
+
+};
+enum  Specifier {Public=1,Private=2,Protected=3};
+class CVariable:public CCommon_Base
+{
+public:
+	bool  is_static;
+	bool  is_changeable;
+	enum Specifier specifier;
+    string 	type;
+	CVariable()
+	{
+		is_static=0;
+		is_changeable=0;
+		type="";
+	}
+};
+class CParemmeter :public CVariable
+{
+
+
+};
+class Cfunction :public CVariable
+{
+public:
+	 vector<CParemmeter> vc;
+	 vector<CVariable> vl;
+};
+class Cclass:public CCommon_Base
+{
+public:
+	vector<CVariable> vc;
+};
+class CParse_word
+{
+public:
+vector<string> parseword(string str) 
+{ 
+	vector<string> l;
+	int t=str.length();
+	int i=0;
+	int p=0;
+    int start=0;
+    while(i < t) 
+    { 
+		if(i==0)
+		{
+			for(int ki=48; ki<=57; ki++)
+			  {
+				  if(str[i] == ki)
+					  goto loop9l;
+			  }
+			  for(int k=65 ,j=97; k<=90,j<=122; k++,j++)
+			  {
+				  if(str[i] == k || str[i] ==j )
+					  goto loop8;
+			  }
+
+			      if(str[i]==' ')
+				  goto loop9;
+			      if(str[i]==46)
+				    goto loop10;
+				  if(str[i]==58)
+				   goto loop11;
+			      if(str[i]==47)
+				   goto loop124;
+			      if(str[i]==35)
+				   goto loop12;
+			      if(str[i]==34)
+				   goto loop13j;
+			      if(str[i]==60)
+				   goto loop6;
+			      if(str[i]==62)
+				   goto loop5;
+			      if(str[i]==59)
+				   goto loop13;
+			      if(str[i]==123)
+				   goto loop14;
+			      if(str[i]==42)
+				   goto loop123;
+			      if(str[i]==9)
+				   goto loop15;
+			      if(str[i]==40)
+				   goto loop16;
+			      if(str[i]==41)
+				   goto loop17;
+			      if(str[i]==61)
+				   goto loop125;
+			      if(str[i]==125)
+				   goto loop17i;
+				  if(str[i]==38)
+				   goto loop122;
+				  if(str[i]==124)
+				   goto loop121;
+				  if(str[i]==91)
+				   goto loop20;
+				  if(str[i]==93)
+				   goto loop18;
+				  if(str[i] == 95) 
+			       goto loop19;
+				  if(str[i] == 44) 
+			       goto loop127;
+				  if(str[i] == 43) 
+			       goto loop128;
+				  if(str[i] == 45) 
+			       goto loop130;
+				  if(str[i] == 33) 
+			       goto loop133;
+				  if(str[i] == 39) 
+			       goto loop134;
+				  if(str[i] == 126) 
+			       goto loop19ij;
+		}
+loop130:		 if(str[i] == 45) //	for -        1
+        { 
+			string result;
+loop131:	result += str[start++];
+              i=start;
+			  p=i;
+			if(str[i] == 61) 
+			    goto loop131;
+		    if(str[i] == 43) 
+				goto loop131;
+			l.push_back(result);
+        } 
+			 if(p==t)
+			   break;
+loop128:		 if(str[i] == 43) //	for +         2
+        { 
+			string result;
+loop129:	result += str[start++];
+              i=start;
+			  p=i;
+			  if(str[i] == 61) 
+			    goto loop129;
+		    if(str[i] == 43) 
+				goto loop129;
+			l.push_back(result);
+        } 
+			 if(p==t)
+			   break;
+loop127:		 if(str[i] == 44) // this 44 is ,     3
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        } 
+			 if(p==t)
+			   break;
+loop19:		 if(str[i] == 95) // this 95 is _         4
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        } 
+			 if(p==t)
+			   break;
+loop19ij:	 if(str[i] == 126) // this 95 is ~        5
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        } 
+			 if(p==t)
+			   break;
+loop13:		  if(str[i] == 59)// this 95 is ;          5
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        } 
+			  if(p==t)
+			   break;
+			  //for !
+loop133:		  if (str[i]==33)// this 33 is not (!)  6
+	  {
+		  string result;
+loop7k:		result += str[start++];
+              i=start;
+			  if(str[i]==61)
+				  goto loop7k;
+			  l.push_back(result);
+			  p=i;
+        } 
+			  if(p==t)
+			   break;
+loop125:	 if(str[i]==61) // this 61 is =               7
+        { 
+			string result;
+loop7:		result += str[start++];
+              i=start;
+			  if(str[i]==61)
+				  goto loop7;
+			  l.push_back(result);
+			  p=i;
+        } 
+			  if(p==t)
+			   break;
+loop6:		if(str[i]==60) // this 60 is <                 8
+        { 
+			string result;
+loop7l:			result += str[start++];
+              i=start;
+			  if(str[i]==42)
+				goto loop7h;
+			   if(str[i]==61)
+				goto loop7l;
+			  if(str[i]==60)
+				  goto loop7l;
+			  l.push_back(result);
+			  p=i;
+        }
+			  if(p==t)
+			   break;
+loop5:		  if(str[i] == 62) // this 62 is >              9
+        { 
+                static string result;
+loop7h:			result += str[start++];
+                 i=start;
+			   if(str[i]==42)
+				goto loop7h;
+			  if(str[i]==61)
+				goto loop7h;
+			  if(str[i]==62)
+				goto loop7h;
+			  l.push_back(result);
+			  p=i;
+       } 
+			  if(p==t)
+			   break;
+loop124:		  if(str[i] == 47) //this 47 is for  ( / )  10
+        { 
+			string result;
+loop4:			result += str[start++];
+              i=start;
+			   if(str[i]==42)
+				  goto loop4;
+			   if(str[i]==47)
+				  goto loop4;
+			   l.push_back(result);
+			   p=i;
+        } 
+		     if(p==t)
+			   break;
+
+loop15:		 if(str[i] == 9) // this 9 for tab              11
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        } 
+			 if(p==t)
+			   break;
+loop12:		 if(str[i] == 35) // this 35 is #                12
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        } 
+			 if(p==t)
+			   break;
+loop11:		 if(str[i] == 58) // this is for colon             13
+        { 
+			string result;
+loop126:	result += str[start++];
+              i=start;
+		   if(str[i] == 58)
+			   goto loop126;
+		   l.push_back(result);
+		   p=i;
+        } 
+			 if(p==t)
+			   break;
+		 // for (
+loop16:		  if(str[i] == 40) // this is for (                14
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        } 
+			  if(p==t)
+			   break;
+loop17i:		   if(str[i] == 41) // for )                    15
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        }
+			  if(p==t)
+			   break;
+loop18:		  if(str[i] == 93)  //for ]                          16
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        } 
+			  if(p==t)
+			   break;
+loop14:		   if(str[i] == 123) //  for {                        17
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        }
+			  if(p==t)
+			  break;
+loop17:	     if(str[i] == 125)  //for }                            18
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        }
+			 if(p==t)
+			   break;
+loop20:		 	 if(str[i] == 91) //for [                          19
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        }
+			  if(p==t)
+			   break;
+loop10:		 if(str[i] == 46) // this is for .                     20
+        { 
+			string result;
+			result += str[start++];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        }
+			 if(p==t)
+			   break;
+loop123:		 if(str[i] == 42) // this is for *                  21
+        { 
+			string result;
+loop1:			result += str[start++];
+              i=start;
+			  if(str[i]==47)
+				  goto loop1;
+			  if(str[i]==38)
+				  goto loop1;
+			  if(str[i]==42)
+				  goto loop1;
+			  l.push_back(result);
+			  p=i;
+        }
+			if(p==t)
+			  break;
+loop122:		 if(str[i] == 38) // this is &&                    22
+        { 
+			string result;
+loop2:		result += str[start++];
+              i=start;
+			  if(str[i]==38)
+				  goto loop2;
+			  l.push_back(result);
+			  p=i;
+        }
+			if(p==t)
+			  break;
+loop121:		 if(str[i] == 124) // this is for |                23
+        { 
+			string result;
+loop3:		result += str[start++];
+              i=start;
+			  if(str[i]==124)
+				  goto loop3;
+			  l.push_back(result);
+			  p=i;
+        }
+			if(p==t)
+			  break;
+loop134:		 if(str[i] == 39) //this is for '                  24
+        { 
+			string result;
+			i++;
+			start++;
+			while(str[i] != 39)
+			{
+			result += str[start++];
+			i++;
+			}
+			l.push_back(result);
+			i++;
+			start=i;
+			p=i;
+        }
+		    if(p==t)
+			  break;
+
+loop13j:		 if(str[i] == 34) //for "                           25    
+        { 
+			string result;
+			i++;
+			start++;
+			while(str[i] != 34)
+			{
+			result += str[start++];
+			i++;
+			}
+			l.push_back(result);
+			i++;
+			start=i;
+			p=i;
+        }
+		    if(p==t)
+			  break;
+
+loop9l:			for(int ki=48; ki<=57; ki++)
+				  if(str[i] == ki)
+				  {
+					string result;
+				   while(str[i] != ' ')
+				 {
+			     result += str[start++];
+				    i++;
+					p=i;
+					if(p==t)
+			          break;
+				  if(str[i]==' ')
+				      break;
+			      if(str[i]==46)
+				      break;
+				  if(str[i]==58)
+				      break;
+			      if(str[i]==47)
+				      break;
+			      if(str[i]==35)
+				      break;
+			      if(str[i]==34)
+				      break;
+			      if(str[i]==60)
+				      break;
+			      if(str[i]==62)
+				      break;
+			      if(str[i]==59)
+				      break;
+			      if(str[i]==123)
+				      break;
+			      if(str[i]==42)
+				      break;
+			      if(str[i]==9)
+				      break;
+			      if(str[i]==40)
+				      break;
+			      if(str[i]==41)
+				      break;
+			      if(str[i]==61)
+				      break;
+			      if(str[i]==125)
+				      break;
+				  if(str[i]==38)
+				      break;
+				  if(str[i]==124)
+				      break;
+				  if(str[i]==91)
+				      break;
+				  if(str[i]==93)
+				      break;
+				  if(str[i] == 95) 
+			          break;
+				  if(str[i] == 44) 
+			          break;
+				  if(str[i] == 43) 
+			          break;
+				  if(str[i] == 45) 
+			          break;
+				  if(str[i] == 33) 
+			          break;
+				  if(str[i] == 39) 
+			          break;
+				  for(int k=65 ,j=97; k<=90,j<=122; k++,j++)
+				  if(str[i] == k || str[i] ==j )
+					  break;
+				 }
+				  l.push_back(result);
+				 if(p==t)
+			          break;
+                 i=start;
+				 p=i;
+			 }
+			if(p==t)
+			   break;
+
+loop8:			  for(int k=65 ,j=97; k<=90,j<=122; k++,j++)
+				  if(str[i] == k || str[i] ==j )
+				  {
+				 string result;
+				 while(str[i] != ' ')
+				 {
+			     result += str[start++];
+				    i++;
+					p=i;
+				  if(p==t)
+			         break;
+				  if(str[i]==' ')
+				     break;
+			      if(str[i]==46)
+				     break;
+				  if(str[i]==58)
+				     break;
+			      if(str[i]==47)
+				     break;
+			      if(str[i]==35)
+				     break;
+			      if(str[i]==34)
+				     break;
+			      if(str[i]==60)
+				     break;
+			      if(str[i]==62)
+				     break;
+			      if(str[i]==59)
+				     break;
+			      if(str[i]==123)
+				     break;
+			      if(str[i]==42)
+				     break;
+			      if(str[i]==9)
+				     break;
+			      if(str[i]==40)
+				     break;
+			      if(str[i]==41)
+				     break;
+			      if(str[i]==61)
+				     break;
+			      if(str[i]==125)
+				     break;
+				  if(str[i]==38)
+				     break;
+				  if(str[i]==124)
+				     break;
+				  if(str[i]==91)
+				     break;
+				  if(str[i]==93)
+				     break;
+				  if(str[i] == 95) 
+			         break;
+				  if(str[i] == 44) 
+			         break;
+				  if(str[i] == 43) 
+			         break;
+				  if(str[i] == 45) 
+			         break;
+				  if(str[i] == 33) 
+			         break;
+				  if(str[i] == 39) 
+			         break;
+				  for(int ki=48; ki<=57; ki++)
+				  if(str[i] == ki)
+					  break;
+				 
+				 }
+				  l.push_back(result);
+				
+				 if(p==t)
+			          break;
+                 i=start;
+				 p=i;
+			 }  
+loop9:        if(str[i] == ' ' ) 
+        { 
+			string result;
+			 if(str[i] == 32) // this is for space ( )                     20
+        { 
+			string result;
+			result += str[start];
+			l.push_back(result);
+              i=start;
+			  p=i;
+        }
+			 if(p==t)
+			   break;
+            i++;
+			start++;
+			p=i;
+		   if(p==t)
+			  break;
+			 for(int k=65 ,j=97; k<=90,j<=122; k++,j++)
+				  if(str[i] == k || str[i] ==j )
+				  {
+            while(str[i] != ' ') 
+			{
+				result += str[start++];
+				i++;
+				p=i;
+				 if(p==t)
+			       break;
+				if(str[i]==' ')
+				      break;
+			      if(str[i]==46)
+					   break;
+				  if(str[i]==44)
+					   break;
+				  if(str[i]==58)
+					   break;
+				  if(str[i]==95)
+				      break;
+			      if(str[i]==47)
+				      break;
+			      if(str[i]==35)
+				      break;
+			      if(str[i]==34)
+				      break;
+			      if(str[i]==60)
+				      break;
+			      if(str[i]==62)
+				      break;
+			      if(str[i]==59)
+				      break;
+			      if(str[i]==123)
+				      break;
+			      if(str[i]==42)
+				      break;
+			      if(str[i]==9)
+				      break;
+			      if(str[i]==40)
+				      break;
+			      if(str[i]==41)
+				      break;
+			      if(str[i]==61)
+				      break;
+			      if(str[i]==125)
+				      break;
+				  if(str[i]==38)
+				      break;
+				  if(str[i]==124)
+				      break;
+				  if(str[i]==91)
+				      break;
+				  if(str[i]==93)
+				      break;
+				  if(str[i]==43)
+				      break;
+				  if(str[i]==45)
+				      break;
+				 for(int ki=48; ki<=57; ki++)
+				  if(str[i] == ki)
+					  break;
+			}
+			l.push_back(result);
+              i=start;
+			  p=i;
+				  }
+			if(p==t)
+			   break;
+        } 
+	   if(p==t)
+     	break;
+    } 
+	vector <string>::iterator it;
+	       for( it= l.begin();it!=l.end(); it++)
+	       {
+		       cout<<*it<<endl;
+		   }
+	 return l;
+} 
+    ~CParse_word()
+	{
+
+	}
+};
+int SkipChar(vector<string> l,int start,vector<string> chars)
+{
+	bool flag=false;
+	do{
+		flag=false;
+		for(int i=0;i<chars.size();i++)
+		{
+			if(chars[i]==l[start])
+			{
+				flag=true;
+				start++;
+				break;
+			}
+		}
+	}
+	while(l.size() > start &&flag);
+	return start;
+}
+bool set_const(int index,vector<string> l)
+{
+	int i=index;
+	i=i-1;
+	while(l[i]==" " || l[i]=="	")
+	{
+		i=i-1;
+	}
+		if(l[i]=="const")
+		{
+			return true;
+		}
+		else
+		return false;
+}
+bool set_static(int index,vector<string> l)
+{
+	int i=index;
+	i=i-1;
+	while(l[i]==" " || l[i]=="	")
+	{
+		i=i-1;
+	}
+		if(l[i]=="static")
+		{
+			return true;
+		}
+		else
+		return false;
+}
+vector<CVariable>  get_variable_type_withou_spacifier (int *&index,vector<string> l )
+{
+	vector<CVariable> vc;
+	vector<string> check_space;
+	check_space.push_back(" ");
+	check_space.push_back("	");
+	bool static_t=0;
+	bool const_t=0;
+	while(l[*index]=="int" || l[*index]=="float" || l[*index]=="string" || l[*index]=="bool" || l[*index]=="char")
+	{
+		int n_static=*index;
+		static_t=set_static(n_static,l);
+		const_t=set_const(n_static,l);
+		int n_vari;
+	    CVariable type_name;
+		string type=l[*index];
+		type_name.type=type;
+		if(static_t==true)
+		{
+			type_name.is_changeable=true;
+			type_name.is_static=true;
+		}
+		if(const_t==true)
+		type_name.is_changeable=false;
+		if(static_t==false && const_t==false)
+		type_name.is_changeable=true;
+	    n_vari=SkipChar(l,*index+1,check_space);
+	    string variable=l[n_vari];
+	    type_name.name=variable;
+	    vc.push_back(type_name);
+		if(l[n_vari+1]==",")
+		{
+		while(l[n_vari+1]!=";")
+		{
+			CVariable multi_variable;
+
+			if(static_t==true)
+		{
+			multi_variable.is_changeable=true;
+			multi_variable.is_static=true;
+		}
+		    if(const_t==true)
+		    multi_variable.is_changeable=false;
+		    if(static_t==false && const_t==false)
+		    multi_variable.is_changeable=true;
+			n_vari=n_vari+2;
+			string multi_variables=l[n_vari];
+			multi_variable.name=multi_variables;
+			multi_variable.type=type;
+			vc.push_back(multi_variable);
+		}
+		}
+		int n1=n_vari+1;
+		int n2=SkipChar(l,n1+1,check_space);
+		*index=n2;
+		if(l[*index]=="const" || l[*index]=="static")
+			{
+				int nn12=*index;
+				int nn2=SkipChar(l,nn12+1,check_space);
+				*index=nn2;
+			}
+	}
+	return vc;
+}
+vector<CVariable>  get_variable_type_with_spacifier (int *&index,vector<string> l)
+{
+	vector<CVariable> vc;
+	vector<string> check_space;
+	check_space.push_back(" ");
+	check_space.push_back("	");
+	bool static_t=0;
+	bool const_t=0;
+	int nb1=*index+1;
+	int nv1=SkipChar(l,nb1+1,check_space);
+		*index=nv1;
+		if(l[*index]=="const" || l[*index]=="static")
+			{
+				int nn12=*index;
+				int nn2=SkipChar(l,nn12+1,check_space);
+				*index=nn2;
+		}
+		while(l[*index]=="int" || l[*index]=="float" || l[*index]=="string" || l[*index]=="bool" || l[*index]=="char")
+	{
+		int n_static=*index;
+		static_t=set_static(n_static,l);
+		const_t=set_const(n_static,l);
+		int n_vari1;
+	    CVariable type_name;
+		string type1=l[*index];
+		type_name.type=type1;
+		if(static_t==true)
+		{
+			type_name.is_changeable=true;
+			type_name.is_static=true;
+		}
+		if(const_t==true)
+		type_name.is_changeable=false;
+		if(static_t==false && const_t==false)
+		type_name.is_changeable=true;
+	    n_vari1=SkipChar(l,*index+1,check_space);
+	    string variable=l[n_vari1];
+	    type_name.name=variable;
+	    vc.push_back(type_name);
+		if(l[n_vari1+1]==",")
+	   {
+		while(l[n_vari1+1]!=";")
+		{
+			CVariable multi_variable;
+			n_vari1=n_vari1+2;
+			if(static_t==true)
+		{
+			multi_variable.is_changeable=true;
+			multi_variable.is_static=true;
+		}
+		    if(const_t==true)
+		    multi_variable.is_changeable=false;
+		    if(static_t==false && const_t==false)
+		    multi_variable.is_changeable=true;
+			string multi_variables1=l[n_vari1];
+			multi_variable.name=multi_variables1;
+			multi_variable.type=type1;
+			vc.push_back(multi_variable);
+		}
+		}
+		int n1=n_vari1+1;
+		int n2=SkipChar(l,n1+1,check_space);
+		*index=n2;
+		string str=l[*index];
+		if(str=="public" || str=="private" || str=="protected")
+			break;
+		if(l[*index]=="const" || l[*index]=="static")
+			{
+				int nn12=*index;
+				int nn2=SkipChar(l,nn12+1,check_space);
+				*index=nn2;
+			}
+}
+		return vc;
+}
+vector<CVariable>  get_variable_type(int *&index,vector<string> l)
+{
+	vector<string> check_space;
+	check_space.push_back(" ");
+	check_space.push_back("	");
+	vector<CVariable> vc;
+	vector<CVariable> vc1;
+	if(l[*index]!="public" && l[*index]!="private" && l[*index]!="protected")
+	{
+		if(l[*index]=="const" || l[*index]=="static")
+			{
+				int nn12=*index;
+				int nn2 =SkipChar(l,nn12+1,check_space);
+				*index=nn2;
+			}
+		vc=get_variable_type_withou_spacifier(index,l);
+		for(int i=0; i<vc.size(); i++)
+			{
+			CVariable v1;
+			v1=vc[i];
+			vc1.push_back(v1);
+			}
+	}
+	else
+	{
+		vc=get_variable_type_with_spacifier(index,l);
+		for(int j=0; j<vc.size(); j++)
+			{
+			CVariable v1;
+			v1=vc[j];
+			vc1.push_back(v1);
+			}
+	}
+	return vc1;
+}
+vector<CVariable> set_specifier(vector<CVariable> vc,Specifier specifier)
+{
+	for(int i=0; i<vc.size();i++)
+	{
+		vc[i].specifier=specifier;
+	}
+	return vc;
+}
+vector<CVariable> get_type_name_specifier(vector<string> l)
+{
+	vector<string> check_space;
+	check_space.push_back(" ");
+	check_space.push_back("	");
+	vector<CVariable> cv1;
+	CVariable cv2;
+	vector<CVariable> vc;
+	int flag = 0;
+	int number;
+	int cnt1=0;
+	int n1;
+	int n2=0;
+	int u=0;
+	int *i=&u;
+	int k=l.size();
+	int *j=&k;
+	for(i; *i<*j; *i=*i+1)  // check public protected private
+		{
+			cnt1++;
+			if(l[*i]=="class")
+			{
+				n1=SkipChar(l,cnt1,check_space);
+				n2=SkipChar(l,n1+2,check_space);
+				*i=n2;
+			}
+			if(l[*i]=="const" || l[*i]=="static")
+			{
+				int nn12=*i;
+				int nn2=SkipChar(l,nn12+1,check_space);
+				*i=nn2;
+			}
+		if(l[*i]!="public" && l[*i]!="private" && l[*i]!="protected")  // check public protected private
+		{
+			vc=get_variable_type(i,l);
+			vc=set_specifier(vc,(Specifier)2);
+			for(int ij=0; ij<vc.size(); ij++)
+			{
+			CVariable v1;
+			v1=vc[ij];
+			cv1.push_back(v1);
+			}
+			if(l[*i+1]=="}")
+				if(l[*i+2]==";")
+					break;
+		}
+		 flag=-1;
+	if(l[*i]=="public")
+	{
+		number=1;
+		flag=1;
+	}
+	if(l[*i]=="private")
+	{
+		number=2;
+		flag=1;
+	}
+	if(l[*i]=="protected")
+	{
+		number=3;
+		flag=1;
+	}
+	if(flag==1)
+	{
+	switch(number)
+	{
+		case 1:                                                           //public
+	        {
+				vc=get_variable_type(i,l);
+				*i=*i-1;
+				vc=set_specifier(vc,(Specifier)1);
+				for(int ij=0; ij<vc.size(); ij++)
+				{
+					CVariable v1;
+			        v1=vc[ij];
+				    cv1.push_back(v1);
+				}
+				break;
+	        }
+		case 2:                                                         //private
+			{
+				vc=get_variable_type(i,l);
+				*i=*i-1;
+				vc=set_specifier(vc,(Specifier)2);
+				for(int ijk=0; ijk<vc.size(); ijk++)
+				{
+					CVariable v1;
+			        v1=vc[ijk];
+				    cv1.push_back(v1);
+				}
+				break;
+			}
+		case 3:                                                       //protected
+			{
+				vc=get_variable_type(i,l);
+				*i=*i-1;
+				vc=set_specifier(vc,(Specifier)3);
+				for(int ijl=0; ijl<vc.size(); ijl++)
+				{
+					CVariable v1;
+			        v1=vc[ijl];
+				    cv1.push_back(v1);
+				}
+				break;
+			}
+	}
+	if(l[*i+1]=="}")
+		if(l[*i+2]==";")
+			break;
+	}
+	}
+return cv1;	
+}
+string CClassname(vector<string> l)
+{ 
+	vector<string> check_space;
+	check_space.push_back(" ");
+	check_space.push_back("	");
+	string s3;
+	int count=0;
+    int full_size=l.size();
+	int n1=0;
+	for(int i=0; i<l.size(); i++)
+	{
+			string s1="class";
+			string s2=l[i];
+			count++;
+			if(s1==s2)
+			{	
+				n1=SkipChar(l,count,check_space);
+				s3=l[n1];
+				break;
+			}
+		}
+	return s3;
+}
+int _tmain(int argc, _TCHAR* argv[])
+{
+	CCommon_Base cb;
+	string name;
+	token t;
+	vector<CVariable> type_name_spacifier;
+	CParse_word pw;
+   string line;
+   string result="";
+   ifstream myfile ("example.txt");
+  if (myfile.is_open())
+  {
+    while ( getline (myfile,line) )
+    {
+		result += line;
+    }
+    myfile.close();
+  }
+  else cout << "Unable to open file"; 
+  vector<string> l = pw.parseword(result);
+             CTokenizer tk;
+		     tk.tokanized(l);
+			name= CClassname(l);
+			cb.name=name;
+			type_name_spacifier=get_type_name_specifier(l);
+	system("pause");
+	return 0;
+}
